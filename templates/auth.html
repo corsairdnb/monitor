@@ -1,0 +1,35 @@
+<template class="app-template home-page">
+
+    <script type="module">
+        import * as auth from './assets/auth.js';
+        import { comments } from './assets/comments.js';
+        window.handleSignInClick = auth.handleAuthClick
+        window.handleSignOutClick = auth.handleAuthClick
+
+        const CHANNEL_ID = 'UC6gvryuXMHZEaDnx-EJNEYw'
+
+        auth.callbacks.onSignIn = () => {
+          document.getElementById('signout-button').style.display = 'inline-block'
+          document.getElementById('signin-button').style.display = 'none'
+          comments(CHANNEL_ID)
+            .subscribe(item => {
+              console.log(item);
+            })
+        }
+
+        auth.callbacks.onSignOut = () => {
+          document.getElementById('signout-button').style.display = 'none'
+          document.getElementById('signin-button').style.display = 'inline-block'
+        }
+    </script>
+
+    <h1>hello world</h1>
+
+    <p>text</p>
+
+    <button id="signin-button" onclick="handleSignInClick()">Sign In</button>
+    <button id="signout-button" onclick="handleSignOutClick()">Sign Out</button>
+
+    <div id="output"></div>
+
+</template>
