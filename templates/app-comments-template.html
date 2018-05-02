@@ -1,0 +1,19 @@
+<template class="app-template">
+    <script type="text/x-template" id="app-comments-template">
+        <div id="app-comments">
+            <div class="title">{{ title }}</div>
+            <div class="chat">
+                <div class="chat-message" v-for="comment in comments" :id="comment.id">
+                    <div>Time: {{ comment.snippet.publishedAt }}</div>
+                    <div>Author: {{ comment.snippet.authorChannelId }}</div>
+                    <div>{{ comment.snippet.displayMessage }}</div>
+                </div>
+            </div>
+        </div>
+    </script>
+    <style>
+        .chat-message {
+            border-bottom: 1px solid #000;
+        }
+    </style>
+</template>

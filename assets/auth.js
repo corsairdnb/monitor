@@ -1,5 +1,7 @@
-const API_KEY = 'AIzaSyD6-qUBQSF5JbeHAD7OxXoguORdWqgiKvs'
-const OAUTH2_CLIENT_ID = '329581477761-af9rcb3kdbpuejcu1i1h83g0385o1a3l.apps.googleusercontent.com'
+import settings from '../app-settings.js'
+
+const API_KEY = settings.API_KEY
+const OAUTH2_CLIENT_ID = settings.OAUTH2_CLIENT_ID
 const SCOPE = 'https://www.googleapis.com/auth/youtube'
 
 let api = document.createElement('script')

@@ -57,7 +57,8 @@
     "electron-shortcut-normalizer": "^1.0.0",
     "glob": "^7.1.0",
     "highlight.js": "^9.3.0",
-    "systemjs": "^0.21.3"
+    "systemjs": "^0.21.3",
+    "vue": "^2.5.16"
   },
   "standard": {
     "env": {

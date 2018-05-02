@@ -1,52 +1,60 @@
-// import { Rx } from '../node_modules/rxjs/Rx.js'
-// import { Observable } from '../node_modules/rxjs/Observable.js
-
 const Rx = window.rxjs
 
-export function comments (channelId) {
-  let myObservable = Rx.Observable.create(observer => {
-    observer.next(request(channelId))
-    setInterval(() => observer.next(request(channelId)), 2000)
+export function comments (channelId, interval = 5000) {
+  return Rx.Observable.create(function (observer) {
+    request(channelId).then(result => {
+      observer.next(result)
+    })
+    setInterval(() => {
+      request(channelId).then(result => {
+        observer.next(result)
+      })
+    }, interval)
   })
-
-  return myObservable
 }
 
 function request (channelId) {
-  let request = gapi.client.youtube.search.list({
-    part: 'id',
-    channelId: channelId,
-    eventType: 'live',
-    maxResults: 1,
-    type: 'video'
-  })
-
-  request.execute(response => {
-    if (!response.items.length) {
-      return []
-    }
-    let request = gapi.client.youtube.liveBroadcasts.list({
-      part: 'id,snippet',
-      id: response.items[0].id.videoId,
-      fields: 'items/snippet/liveChatId'
+  return new Promise(resolve => {
+    let request = gapi.client.youtube.search.list({
+      part: 'id',
+      channelId: channelId,
+      eventType: 'live',
+      maxResults: 1,
+      type: 'video'
     })
 
+    // get channel
     request.execute(response => {
       if (!response.items.length) {
-        return []
+        return resolve([])
       }
-      let liveChatId = response.items[0].snippet.liveChatId
-
-      let request = gapi.client.youtube.liveChatMessages.list({
+      let request = gapi.client.youtube.liveBroadcasts.list({
         part: 'id,snippet',
-        liveChatId: liveChatId
+        id: response.items[0].id.videoId,
+        fields: 'items/snippet/liveChatId'
       })
 
+      // get live stream
       request.execute(response => {
         if (!response.items.length) {
-          return []
+          return resolve([])
         }
-        return response.items
+        let liveChatId = response.items[0].snippet.liveChatId
+
+        let request = gapi.client.youtube.liveChatMessages.list({
+          part: 'id,snippet',
+          liveChatId: liveChatId
+        })
+
+        // get chat messages
+        request.execute(response => {
+          console.log(response);
+          // TODO: get authors info
+          if (!response.items.length) {
+            return resolve([])
+          }
+          return resolve(response.items)
+        })
       })
     })
   })
