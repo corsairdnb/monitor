@@ -1,8 +1,8 @@
 {
-  "name": "ElectronAPIDemos",
-  "productName": "Electron API Demos",
-  "version": "1.3.0",
-  "description": "Electron interactive API demos",
+  "name": "Monitor",
+  "productName": "Video Stream Monitor",
+  "version": "0.0.1",
+  "description": "Video Stream Monitor",
   "private": true,
   "main": "main.js",
   "scripts": {
@@ -22,14 +22,11 @@
     "prepack": "check-for-leaks",
     "prepush": "check-for-leaks"
   },
-  "repository": "https://github.com/electron/electron-api-demos",
+  "repository": "https://github.com/corsairdnb/monitor",
   "keywords": [
-    "Electron",
-    "API",
-    "demo"
+    "Electron"
   ],
-  "author": "GitHub",
-  "license": "MIT",
+  "license": "UNLICENSED",
   "devDependencies": {
     "chai": "^3.4.1",
     "chai-as-promised": "^6.0.0",
